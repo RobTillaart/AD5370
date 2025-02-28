@@ -17,18 +17,43 @@ Arduino library for the AD5370 40 channel 16 bit DAC over SPI.
 
 **Experimental**
 
-This library is to use the AD5370 device. 
-This device controls **forty** 16 bit DACs over SPI.
+This library is to use the AD5370 device from a microcontroller.
+This AD5370 device is quite unique as it controls **40 channels** of 16 bit DACs.
+To set the DAC's fast it uses SPI and not I2C.
+The 40 channels are split up in 5 groups of 8, and group 0 is special.
+See datasheet for details.
+
+Besides the DAC value per channel, the AD5370 supports a GAIN and OFFSET for every channel.
+
+There are GROUP functions to set multiple channels in one call.
+
+The device has two VREFs, VREF0 for group 0, and VREF1 for group 1,2,3,4.
+
+
+The library is **NOT** tested with hardware yet. Feedback welcome.
 
 **Read datasheet before use**
 
 Readme.md to be elaborated (but time is up for now)
 
-- channels
-- groups
-- VREF0 + VREF1
-
 Feedback as always is welcome.
+
+
+### Performance
+
+Timing based upon dry run of the performance sketch (Arduino UNO).
+It tests the duration of **setDAC()** as that is the most used. 
+Times are for 1000 calls in microseconds.
+
+|    SPI     |  TIME (us)  |  notes  |
+|:----------:|:-----------:|:-------:|
+|  250000    |    111708   |  very slow, think long distance.
+|  500000    |     63708   |
+|  1000000   |     39692   |
+|  2000000   |     27660   |
+|  4000000   |     21624   |  
+|  8000000   |     18612   |
+|  16000000  |     18612   |
 
 
 ### Related
